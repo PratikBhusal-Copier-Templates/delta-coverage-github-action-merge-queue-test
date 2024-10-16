@@ -52,7 +52,7 @@ jobs:
         # handling this situation.
         if: ${{ github.event_name != 'merge_group' && github.event.action == 'checks_requested' }}
         id: jacoco-delta-coverage
-        uses: madrapps/jacoco-report@v1.6.1
+        uses: madrapps/jacoco-report@v1.7.1
         with:
           # TODO: Update path
           paths: ${{ github.workspace }}/library/build/reports/coverage-reports/delta-coverage/**/report.xml
