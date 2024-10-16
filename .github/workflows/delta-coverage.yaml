@@ -47,7 +47,10 @@ jobs:
           # TODO: Update path
           path: ${{ github.workspace }}/library/build/reports/coverage-reports/delta-coverage/report.xml
       - name: Jacoco Report to PR
-        if: ${{ github.event_name != 'merge_group' }}
+        # TODO: madrapps/jacoco-report doesn't work when used within a
+        # merque_group event (ie a merge queue). See if there is a better way of
+        # handling this situation.
+        if: ${{ github.event_name != 'merge_group' && github.event.action == 'checks_requested' }}
         id: jacoco-delta-coverage
         uses: madrapps/jacoco-report@v1.6.1
         with:
@@ -62,7 +65,10 @@ jobs:
           pass-emoji: ':green_circle:'
           fail-emoji: ':red_circle:'
       - name: Get the Coverage info
-        if: ${{ github.event_name != 'merge_group' }}
+        # TODO: madrapps/jacoco-report doesn't work when used within a
+        # merque_group event (ie a merge queue). See if there is a better way of
+        # handling this situation.
+        if: ${{ github.event_name != 'merge_group' && github.event.action == 'checks_requested' }}
         run: |
           echo "Total coverage ${{ steps.jacoco-delta-coverage.outputs.coverage-overall }}"
           echo "Changed Files coverage ${{ steps.jacoco-delta-coverage.outputs.coverage-changed-files }}"
